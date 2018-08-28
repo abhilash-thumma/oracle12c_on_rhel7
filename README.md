@@ -7,7 +7,7 @@ To install Oracle 12.2 on a fresh Virtual machine with RHEL 7 with minimum insta
 
 1. Enable RHEL DVD repository:
 
-  bash rhel-post-install-script.sh
+  bash rhel-init-script.sh
 
 2. Install oracle database (Only the software, Enterprise Edition): 
 
@@ -19,13 +19,9 @@ To install Oracle 12.2 on a fresh Virtual machine with RHEL 7 with minimum insta
 
   dbca
 
-4. Execute this script if you want that the instance to start at boot time: 
+4. This remove the installation files, enable the startup at boot, and create a listener that listen on all interfaces:
 
-  bash enable-database-startup-at-boot.sh
-
-5. Remove the Oracle installer files:
-
-  bash remove_installer_files.sh
+  bash post-install.sh              
 
 
 enjoy
