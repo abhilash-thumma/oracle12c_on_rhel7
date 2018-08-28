@@ -35,7 +35,7 @@ create_groups(){
   501 nobody"
   echo "$groups" | remove_heading_spaces | while read uid group ; do
     check_group $group || { 
-      groupadd -g $uid $group || return $false
+      groupadd -g $uid $group
     }
   done
   return $true
@@ -43,14 +43,14 @@ create_groups(){
 
 create_oracle_user(){
   check_user oracle || {
-    useradd -u 502 -g oinstall -G dba,asmadmin,oper -s /bin/bash -m oracle || return $false
+    useradd -u 502 -g oinstall -G dba,asmadmin,oper -s /bin/bash -m oracle || return $error
   }
   return $true
 }
 
 change_oracle_password(){
   [ "$1" == "" ] || {
-    echo "oracle:$1" | chpasswd || return $false
+    echo "oracle:$1" | chpasswd || return $error
   }
   return $true
 }
@@ -61,8 +61,8 @@ decompress_oracle12c_package(){
     (
     cd /tmp &&
     rm -rf database
-    unzip -q -o "$software_dir/linuxx64_12201_database.zip" || return $false
-    chown -R oracle:oinstall database || return $false
+    unzip -q -o "$software_dir/linuxx64_12201_database.zip" || return $error
+    chown -R oracle:oinstall database || return $error
     )
   }
   return $true
@@ -79,8 +79,8 @@ install_oracle12c(){
 
 check_hostname_and_ip(){
   local line=$(cat /etc/hosts | grep -v ^# | grep -w $HOSTNAME | tr ' \t' '\n')
-  [ "$(echo "$line" | head -1)" == "" ] && return $false
-  echo "$line" | tail -n +2 | grep -q -w $HOSTNAME || return $false
+  [ "$(echo "$line" | head -1)" == "" ] && return $error
+  echo "$line" | tail -n +2 | grep -q -w $HOSTNAME || return $error
 }
 
 configure_kernel_parameters(){
@@ -252,7 +252,7 @@ main(){
   configure_kernel_parameters &&
   create_groups 
   create_oracle_user &&
-  change_oracle_password elodie &&
+  change_oracle_password oracle &&
   set_user_limits &&
   create_oracle_directories &&
   create_oraenv_file dbhome dbcssi &&
