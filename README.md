@@ -13,15 +13,16 @@ To install Oracle 12.2 on a fresh Virtual machine with RHEL 7 with minimum insta
 
   bash install.sh
 
-3. Create instance:
+3. Launch this command after the previous task is complete:
+
+  bash post-install.sh              
+
+4. Create instance:
 
   bash go-oracle.sh
 
   dbca
 
-4. This remove the installation files, enable the startup at boot, and create a listener that listen on all interfaces:
-
-  bash post-install.sh              
 
 
 enjoy

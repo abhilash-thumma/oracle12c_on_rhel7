@@ -242,6 +242,9 @@ create_oracle_service(){
   systemctl enable oracle
 }
 
+check_display(){
+  xdpyinfo >/dev/null 2>/dev/null
+}
 
 main(){
   check_hostname_and_ip || {
@@ -260,6 +263,10 @@ main(){
   decompress_oracle12c_package &&
   open_firewall_for_oracle &&
   create_oracle_service &&
+  check_display || {
+    echo "Error accessing X11 please check DISPLAY variable"
+    exit 1
+  }
   install_oracle12c
 }
 
