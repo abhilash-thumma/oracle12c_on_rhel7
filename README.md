@@ -16,6 +16,7 @@ To install Oracle 12.2 on a fresh Virtual machine with RHEL 7 with minimum insta
 3. Create instance:
 
   bash go-oracle.sh
+
   dbca
 
 4. Execute this script if you want that the instance to start at boot time: 
